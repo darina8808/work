@@ -1,0 +1,623 @@
+<!DOCTYPE html>
+<html lang="uk" class="h-full bg-stone-100">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FirstStep Jobs — Пошук роботи для фахівців з початковим досвідом</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- FontAwesome для іконок -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Font Inter -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    },
+                    colors: {
+                        stone: {
+                            50: '#fafaf9',
+                            100: '#f5f5f4',
+                            200: '#e7e5e4',
+                            300: '#d6d3d1',
+                            400: '#a8a29e',
+                            500: '#78716c',
+                            600: '#57534e',
+                            700: '#44403c',
+                            800: '#292524',
+                            900: '#1c1917',
+                        },
+                        amber: {
+                            50: '#fffbeb',
+                            100: '#fef3c7',
+                            200: '#fde68a',
+                            600: '#d97706',
+                            700: '#b45309',
+                            800: '#92400e',
+                            900: '#78350f',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        /* Custom scrollbar for better visual elegance */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #f5f5f4;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #d6d3d1;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #a8a29e;
+        }
+    </style>
+</head>
+<body class="font-sans text-stone-800 bg-[#fbf9f5] flex flex-col min-h-full">
+
+    <!-- Header Navigation -->
+    <header class="border-b border-stone-200 bg-white/90 backdrop-blur sticky top-0 z-30 shadow-sm">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
+            <div class="flex items-center gap-3">
+                <div class="w-10 h-10 rounded-lg bg-stone-800 flex items-center justify-center font-bold text-amber-100 text-xl shadow-md">
+                    FS
+                </div>
+                <div>
+                    <span class="text-lg font-bold tracking-tight text-stone-900 block leading-none">FirstStep<span class="text-amber-700">Jobs</span></span>
+                    <span class="text-[10px] text-stone-500 font-medium">Entry-Level & Remote Career Hub</span>
+                </div>
+            </div>
+
+            <nav class="hidden md:flex items-center space-x-6 text-sm font-medium text-stone-600">
+                <a href="#" class="text-stone-900 font-semibold hover:text-amber-700 transition-colors">Пошук вакансій</a>
+                <a href="#" class="hover:text-amber-700 transition-colors">Компанії</a>
+                <a href="#" class="hover:text-amber-700 transition-colors">Поради для резюме</a>
+            </nav>
+
+            <div class="flex items-center gap-3">
+                <button class="text-sm font-medium text-stone-600 hover:text-stone-900 px-3 py-2 transition-colors">Вхід</button>
+                <button class="text-sm font-medium bg-stone-800 hover:bg-stone-700 text-stone-50 px-4 py-2 rounded-lg transition-colors shadow-sm">Створити резюме</button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content Area -->
+    <main class="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        
+        <!-- Hero & Fast Filter Banner -->
+        <div class="mb-8 bg-white border border-stone-200/80 rounded-2xl p-6 md:p-8 relative overflow-hidden shadow-sm">
+            <div class="absolute -right-10 -bottom-10 w-80 h-80 bg-amber-500/5 rounded-full blur-3xl pointer-events-none"></div>
+            
+            <div class="max-w-3xl mb-6">
+                <h1 class="text-2xl sm:text-3xl font-bold text-stone-900 tracking-tight mb-2">
+                    Старт кар’єри без бар’єрів та плутанини
+                </h1>
+                <p class="text-stone-600 text-sm sm:text-base">
+                    Чіткі умови роботи для спеціалістів з початковим досвідом. Прозорий формат: віддалено, гібрид чи офіс.
+                </p>
+            </div>
+
+            <!-- Search Bar -->
+            <div class="grid grid-cols-1 md:grid-cols-12 gap-3 mb-6">
+                <div class="md:col-span-5 relative">
+                    <i class="fa-solid fa-magnifying-glass absolute left-3.5 top-3.5 text-stone-400 text-sm"></i>
+                    <input type="text" id="searchInput" placeholder="Посада, технологія або позиція..." 
+                        class="w-full bg-stone-50 border border-stone-300 rounded-xl pl-10 pr-4 py-2.5 text-sm text-stone-900 placeholder-stone-400 focus:outline-none focus:border-stone-500 focus:bg-white transition-colors">
+                </div>
+                
+                <div class="md:col-span-4 relative">
+                    <i class="fa-solid fa-graduation-cap absolute left-3.5 top-3.5 text-stone-400 text-sm"></i>
+                    <select id="experienceFilter" class="w-full bg-stone-50 border border-stone-300 rounded-xl pl-10 pr-4 py-2.5 text-sm text-stone-800 focus:outline-none focus:border-stone-500 focus:bg-white transition-colors appearance-none cursor-pointer">
+                        <option value="all">Усі рівні досвіду</option>
+                        <option value="no-exp" selected>Без досвіду (0 років)</option>
+                        <option value="up-to-1">До 1 року</option>
+                        <option value="internship">Стажування / Інтернатура</option>
+                    </select>
+                    <i class="fa-solid fa-chevron-down absolute right-3.5 top-3.5 text-stone-400 text-xs pointer-events-none"></i>
+                </div>
+
+                <div class="md:col-span-3">
+                    <button onclick="applyFilters()" class="w-full bg-stone-800 hover:bg-stone-700 text-white font-medium py-2.5 px-4 rounded-xl text-sm transition-colors flex items-center justify-center gap-2 shadow-sm">
+                        <i class="fa-solid fa-filter"></i>
+                        Шукати вакансії
+                    </button>
+                </div>
+            </div>
+
+            <!-- PRIMARY FILTER: Work Format -->
+            <div class="border-t border-stone-200/80 pt-5 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+                <div class="flex items-center gap-2">
+                    <span class="text-xs font-semibold text-stone-500 uppercase tracking-wider">Формат роботи:</span>
+                </div>
+                
+                <div class="flex flex-wrap gap-2" id="formatTabs">
+                    <button data-format="all" onclick="setFormatFilter('all')" 
+                        class="format-tab active px-4 py-2 rounded-lg text-xs font-medium transition-all bg-stone-800 text-white border border-stone-800">
+                        Усі вакансії
+                    </button>
+                    <button data-format="remote" onclick="setFormatFilter('remote')" 
+                        class="format-tab px-4 py-2 rounded-lg text-xs font-medium transition-all bg-stone-100 text-stone-700 hover:bg-stone-200 border border-stone-300 flex items-center gap-1.5">
+                        <span class="w-2 h-2 rounded-full bg-emerald-600"></span>
+                        Повністю дистанційно (Remote)
+                    </button>
+                    <button data-format="hybrid" onclick="setFormatFilter('hybrid')" 
+                        class="format-tab px-4 py-2 rounded-lg text-xs font-medium transition-all bg-stone-100 text-stone-700 hover:bg-stone-200 border border-stone-300 flex items-center gap-1.5">
+                        <span class="w-2 h-2 rounded-full bg-amber-600"></span>
+                        Гібрид (Hybrid)
+                    </button>
+                    <button data-format="office" onclick="setFormatFilter('office')" 
+                        class="format-tab px-4 py-2 rounded-lg text-xs font-medium transition-all bg-stone-100 text-stone-700 hover:bg-stone-200 border border-stone-300 flex items-center gap-1.5">
+                        <span class="w-2 h-2 rounded-full bg-stone-400"></span>
+                        Офіс (On-site)
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Layout Grid: Secondary Filters Sidebar + Jobs Feed -->
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
+
+            <!-- Sidebar Filters & Guides -->
+            <aside class="lg:col-span-3 space-y-6">
+                <!-- Advanced Criteria Filter -->
+                <div class="bg-white border border-stone-200 rounded-xl p-5 shadow-sm">
+                    <h3 class="text-sm font-semibold text-stone-900 mb-4 flex items-center justify-between">
+                        Детальні фільтри
+                        <button onclick="resetFilters()" class="text-xs text-amber-700 hover:underline font-normal">Скинути</button>
+                    </h3>
+
+                    <!-- Equipment Filter -->
+                    <div class="mb-5">
+                        <label class="text-xs font-medium text-stone-500 block mb-2">Обладнання (Equipment)</label>
+                        <div class="space-y-2">
+                            <label class="flex items-center text-xs text-stone-700 cursor-pointer">
+                                <input type="checkbox" value="provided" class="filter-equipment rounded bg-stone-50 border-stone-300 text-amber-700 focus:ring-0 mr-2">
+                                Надають ноутбук / техніка
+                            </label>
+                            <label class="flex items-center text-xs text-stone-700 cursor-pointer">
+                                <input type="checkbox" value="byod" class="filter-equipment rounded bg-stone-50 border-stone-300 text-amber-700 focus:ring-0 mr-2">
+                                Власне обладнання (BYOD)
+                            </label>
+                        </div>
+                    </div>
+
+                    <!-- Contract Type Filter -->
+                    <div class="mb-5">
+                        <label class="text-xs font-medium text-stone-500 block mb-2">Формат співпраці</label>
+                        <div class="space-y-2">
+                            <label class="flex items-center text-xs text-stone-700 cursor-pointer">
+                                <input type="checkbox" value="fop" class="filter-contract rounded bg-stone-50 border-stone-300 text-amber-700 focus:ring-0 mr-2">
+                                ФОП (3 група)
+                            </label>
+                            <label class="flex items-center text-xs text-stone-700 cursor-pointer">
+                                <input type="checkbox" value="kzpp" class="filter-contract rounded bg-stone-50 border-stone-300 text-amber-700 focus:ring-0 mr-2">
+                                КЗпП / Офіційне
+                            </label>
+                            <label class="flex items-center text-xs text-stone-700 cursor-pointer">
+                                <input type="checkbox" value="b2b" class="filter-contract rounded bg-stone-50 border-stone-300 text-amber-700 focus:ring-0 mr-2">
+                                B2B / Gig-Contract
+                            </label>
+                        </div>
+                    </div>
+
+                    <!-- Timezone Filter -->
+                    <div>
+                        <label class="text-xs font-medium text-stone-500 block mb-2">Часовий пояс</label>
+                        <select id="timezoneSelect" class="w-full bg-stone-50 border border-stone-200 rounded-lg p-2 text-xs text-stone-700 focus:outline-none focus:border-stone-400">
+                            <option value="all">Будь-який</option>
+                            <option value="gmt2">GMT+2 (Український час)</option>
+                            <option value="flexible">Гнучкий / Без прив'язки</option>
+                            <option value="us">US Hours (EST/PST)</option>
+                        </select>
+                    </div>
+                </div>
+
+                <!-- Junior Tips Card -->
+                <div class="bg-amber-50/60 border border-amber-200/80 rounded-xl p-5 shadow-sm">
+                    <div class="w-8 h-8 rounded-lg bg-amber-200/60 text-amber-800 flex items-center justify-center text-sm mb-3">
+                        <i class="fa-solid fa-lightbulb"></i>
+                    </div>
+                    <h4 class="text-sm font-semibold text-stone-900 mb-1">Порада для стартів</h4>
+                    <p class="text-xs text-stone-600 leading-relaxed mb-3">
+                        Не маєте комерційного досвіду? Вкажіть навчальні або пет-проекти та додайте посилання на GitHub чи портфоліо.
+                    </p>
+                    <a href="#" class="text-xs font-semibold text-amber-800 hover:text-amber-900 flex items-center gap-1">
+                        Як правильно оформити резюме <i class="fa-solid fa-arrow-right text-[10px]"></i>
+                    </a>
+                </div>
+            </aside>
+
+            <!-- Main Job Listings Feed -->
+            <section class="lg:col-span-9 space-y-4">
+                
+                <!-- Counter & Sorting Bar -->
+                <div class="flex items-center justify-between pb-2 text-xs text-stone-500">
+                    <div>
+                        Знайдено вакансій: <span id="jobsCount" class="font-bold text-stone-900">0</span>
+                    </div>
+                    <div class="flex items-center gap-2">
+                        <span>Сортування:</span>
+                        <select class="bg-white border border-stone-200 text-stone-700 text-xs rounded-lg px-2 py-1 focus:outline-none">
+                            <option>За датою (новіші)</option>
+                            <option>За відповідністю</option>
+                        </select>
+                    </div>
+                </div>
+
+                <!-- Container where Job Cards will be dynamically injected -->
+                <div id="jobsList" class="space-y-4">
+                    <!-- Cards are rendered via JavaScript -->
+                </div>
+
+                <!-- Empty state (hidden by default) -->
+                <div id="emptyState" class="hidden text-center py-12 bg-white border border-stone-200 rounded-xl shadow-sm">
+                    <i class="fa-solid fa-folder-open text-4xl text-stone-300 mb-3 block"></i>
+                    <h3 class="text-base font-semibold text-stone-800 mb-1">Вакансій не знайдено</h3>
+                    <p class="text-xs text-stone-500">Спробуйте змінити критерії фільтрації або пошуковий запит.</p>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <!-- Job Modal Detail -->
+    <div id="jobModal" class="fixed inset-0 bg-stone-900/40 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
+        <div class="bg-white border border-stone-200 rounded-2xl w-full max-w-2xl max-h-[90vh] overflow-y-auto shadow-xl p-6 relative">
+            <button onclick="closeModal()" class="absolute top-4 right-4 text-stone-400 hover:text-stone-700 text-lg w-8 h-8 rounded-full bg-stone-100 flex items-center justify-center">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+
+            <div id="modalContent">
+                <!-- Dynamic Content Injected Here -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="border-t border-stone-200 bg-white py-6 mt-12 text-xs text-stone-500">
+        <div class="max-w-7xl mx-auto px-4 text-center sm:flex sm:justify-between sm:text-left">
+            <p>© 2026 FirstStepJobs. Платформа з прозорими умовами працевлаштування.</p>
+            <div class="mt-2 sm:mt-0 space-x-4">
+                <a href="#" class="hover:underline">Конфіденційність</a>
+                <a href="#" class="hover:underline">Умови користування</a>
+                <a href="#" class="hover:underline">Підтримка</a>
+            </div>
+        </div>
+    </footer>
+
+    <!-- JavaScript Data & Logic -->
+    <script>
+        // Mock Job Database
+        const jobsDatabase = [
+            {
+                id: 1,
+                title: "Junior Support Specialist (Чат-підтримка)",
+                company: "TechFlow International",
+                logo: "TF",
+                logoBg: "bg-stone-800 text-stone-100",
+                format: "remote", // remote, hybrid, office
+                formatLabel: "Повністю дистанційно",
+                location: "Вся Україна / Remote",
+                experience: "no-exp",
+                experienceLabel: "Без досвіду",
+                timezone: "gmt2",
+                timezoneLabel: "GMT+2 (Український час)",
+                schedule: "Змінний (40 год/тиж)",
+                employment: "Повна зайнятість",
+                equipment: "provided",
+                equipmentLabel: "Ноутбук надається",
+                contract: "fop",
+                contractLabel: "ФОП 3 група",
+                salary: "18,000 - 24,000 грн",
+                date: "2 години тому",
+                description: "Шукаємо уважного та комунікабельного фахівця для роботи з клієнтами в чаті. Готові навчити всьому з нуля протягом 2 тижнів оплачуваного стажування.",
+                requirements: ["Вільна українська мова", "Письмова грамотність", "Вміння швидко друкувати", "Базове знання англійської (B1 буде плюсом)"]
+            },
+            {
+                id: 2,
+                title: "Trainee / Junior Content Manager",
+                company: "MediaGrowth Studio",
+                logo: "MG",
+                logoBg: "bg-amber-700 text-amber-50",
+                format: "hybrid",
+                formatLabel: "Гібрид (2 дні офіс / 3 дні дім)",
+                location: "Київ (м. Почайна)",
+                experience: "no-exp",
+                experienceLabel: "Без досвіду",
+                timezone: "gmt2",
+                timezoneLabel: "GMT+2",
+                schedule: "09:00 - 18:00 (Пн-Пт)",
+                employment: "Повна зайнятість",
+                equipment: "provided",
+                equipmentLabel: "Робоче місце + MacBook",
+                contract: "kzpp",
+                contractLabel: "Офіційне працевлаштування",
+                salary: "20,000 грн",
+                date: "Сьогодні",
+                description: "Заповнення карток товарів на маркетплейсах, робота з графічними редакторами для банерів. Чудовий старт для тех-орієнтованих гуманітаріїв.",
+                requirements: ["Базові навички Photoshop/Figma", "Уважність до деталей", "Бажання вчитися"]
+            },
+            {
+                id: 3,
+                title: "Junior QA Engineer (Manual)",
+                company: "SoftNext Solutions",
+                logo: "SN",
+                logoBg: "bg-emerald-800 text-emerald-50",
+                format: "remote",
+                formatLabel: "Повністю дистанційно",
+                location: "Remote (Global)",
+                experience: "up-to-1",
+                experienceLabel: "До 1 року / Курси",
+                timezone: "flexible",
+                timezoneLabel: "Гнучкий графік",
+                schedule: "Гнучкі 8 годин",
+                employment: "Повна зайнятість",
+                equipment: "byod",
+                equipmentLabel: "Власний ПК / Комп компенсація",
+                contract: "b2b",
+                contractLabel: "B2B Contract",
+                salary: "$600 - $800",
+                date: "1 день тому",
+                description: "Тестування веб-додатків, складання баг-репортів у Jira, створення тест-кейсів. Розглядаємо випускників курсів з гарними теоретичними знаннями.",
+                requirements: ["Розуміння SDLC, HTTP, REST", "Вміння складати тест-кейси", "Англійська Intermediate+"]
+            },
+            {
+                id: 4,
+                title: "Модератор контенту / Асистент",
+                company: "EcoMarket Digital",
+                logo: "EM",
+                logoBg: "bg-stone-700 text-stone-100",
+                format: "office",
+                formatLabel: "Офіс",
+                location: "Львів (Центр)",
+                experience: "no-exp",
+                experienceLabel: "Без досвіду",
+                timezone: "gmt2",
+                timezoneLabel: "GMT+2",
+                schedule: "10:00 - 19:00",
+                employment: "Часткова / Повна",
+                equipment: "provided",
+                equipmentLabel: "Обладнане робоче місце",
+                contract: "fop",
+                contractLabel: "ФОП",
+                salary: "16,000 - 19,000 грн",
+                date: "2 дні тому",
+                description: "Перевірка оголошень на відповідність правилам платформи, допомога старшому менеджеру відділу контенту.",
+                requirements: ["Посидючість", "Вільне володіння ПК", "Базовий MS Excel"]
+            },
+            {
+                id: 5,
+                title: "Junior Lead Generation Specialist",
+                company: "Outreach Agency",
+                logo: "OA",
+                logoBg: "bg-amber-800 text-amber-50",
+                format: "remote",
+                formatLabel: "Повністю дистанційно",
+                location: "Remote",
+                experience: "no-exp",
+                experienceLabel: "Без досвіду",
+                timezone: "us",
+                timezoneLabel: "US Hours (EST: 15:00-23:00)",
+                schedule: "Вечірня зміна",
+                employment: "Повна зайнятість",
+                equipment: "byod",
+                equipmentLabel: "Власний ПК",
+                contract: "fop",
+                contractLabel: "ФОП 3 група",
+                salary: "22,000 грн + бонуси",
+                date: "3 дні тому",
+                description: "Пошук контактів потенційних B2B клієнтів на LinkedIn за заданими критеріями та збір бази в CRM.",
+                requirements: ["Англійська Upper-Intermediate (B2)", "Вміння працювати з LinkedIn", "Аналітичний склад розуму"]
+            }
+        ];
+
+        let activeFormatFilter = 'all';
+
+        function renderJobs() {
+            const container = document.getElementById('jobsList');
+            const searchVal = document.getElementById('searchInput').value.toLowerCase();
+            const expVal = document.getElementById('experienceFilter').value;
+            const tzVal = document.getElementById('timezoneSelect').value;
+
+            const selectedEquipment = Array.from(document.querySelectorAll('.filter-equipment:checked')).map(cb => cb.value);
+            const selectedContract = Array.from(document.querySelectorAll('.filter-contract:checked')).map(cb => cb.value);
+
+            const filteredJobs = jobsDatabase.filter(job => {
+                if (activeFormatFilter !== 'all' && job.format !== activeFormatFilter) return false;
+                if (searchVal && !job.title.toLowerCase().includes(searchVal) && !job.company.toLowerCase().includes(searchVal)) return false;
+                if (expVal !== 'all' && job.experience !== expVal) return false;
+                if (tzVal !== 'all' && job.timezone !== tzVal) return false;
+                if (selectedEquipment.length > 0 && !selectedEquipment.includes(job.equipment)) return false;
+                if (selectedContract.length > 0 && !selectedContract.includes(job.contract)) return false;
+                return true;
+            });
+
+            document.getElementById('jobsCount').innerText = filteredJobs.length;
+
+            if (filteredJobs.length === 0) {
+                container.innerHTML = '';
+                document.getElementById('emptyState').classList.remove('hidden');
+                return;
+            } else {
+                document.getElementById('emptyState').classList.add('hidden');
+            }
+
+            container.innerHTML = filteredJobs.map(job => {
+                let formatBadgeClass = "";
+                let formatIcon = "";
+                if (job.format === 'remote') {
+                    formatBadgeClass = "bg-emerald-50 text-emerald-800 border-emerald-200";
+                    formatIcon = "fa-house-laptop";
+                } else if (job.format === 'hybrid') {
+                    formatBadgeClass = "bg-amber-50 text-amber-900 border-amber-200";
+                    formatIcon = "fa-building-user";
+                } else {
+                    formatBadgeClass = "bg-stone-100 text-stone-700 border-stone-200";
+                    formatIcon = "fa-building";
+                }
+
+                return `
+                <div class="bg-white border border-stone-200/80 hover:border-stone-300 rounded-xl p-5 transition-all shadow-sm hover:shadow-md">
+                    <div class="flex flex-col md:flex-row md:items-start justify-between gap-4">
+                        
+                        <!-- Main Job Info -->
+                        <div class="flex items-start gap-3.5">
+                            <div class="w-12 h-12 rounded-xl ${job.logoBg} flex items-center justify-center font-bold text-base shadow-sm shrink-0">
+                                ${job.logo}
+                            </div>
+                            <div>
+                                <h2 class="text-base font-semibold text-stone-900 hover:text-amber-800 cursor-pointer transition-colors" onclick="openModal(${job.id})">
+                                    ${job.title}
+                                </h2>
+                                <div class="text-xs text-stone-500 mt-1 flex flex-wrap items-center gap-2">
+                                    <span class="font-medium text-stone-700">${job.company}</span>
+                                    <span>•</span>
+                                    <span><i class="fa-solid fa-location-dot text-stone-400 mr-1"></i>${job.location}</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Salary & Action -->
+                        <div class="md:text-right flex md:flex-col justify-between items-end gap-2">
+                            <span class="text-base font-bold text-emerald-700">${job.salary}</span>
+                            <button onclick="openModal(${job.id})" class="text-xs bg-stone-100 hover:bg-stone-200 text-stone-800 font-medium px-3 me-1 py-1.5 rounded-lg border border-stone-200 transition-colors">
+                                Детальніше
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- BADGES GRID -->
+                    <div class="mt-4 pt-3 border-t border-stone-100 flex flex-wrap gap-2 text-[11px]">
+                        
+                        <span class="px-2.5 py-1 rounded-md border ${formatBadgeClass} font-medium flex items-center gap-1.5">
+                            <i class="fa-solid ${formatIcon}"></i>
+                            ${job.formatLabel}
+                        </span>
+
+                        <span class="px-2.5 py-1 rounded-md bg-stone-50 text-stone-600 border border-stone-200 flex items-center gap-1.5">
+                            <i class="fa-regular fa-clock text-stone-400"></i>
+                            ${job.timezoneLabel}
+                        </span>
+
+                        <span class="px-2.5 py-1 rounded-md bg-stone-50 text-stone-600 border border-stone-200 flex items-center gap-1.5">
+                            <i class="fa-regular fa-calendar text-stone-400"></i>
+                            ${job.schedule}
+                        </span>
+
+                        <span class="px-2.5 py-1 rounded-md bg-stone-50 text-stone-600 border border-stone-200 flex items-center gap-1.5">
+                            <i class="fa-solid fa-laptop text-stone-400"></i>
+                            ${job.equipmentLabel}
+                        </span>
+
+                        <span class="px-2.5 py-1 rounded-md bg-stone-50 text-stone-600 border border-stone-200 flex items-center gap-1.5">
+                            <i class="fa-solid fa-file-contract text-stone-400"></i>
+                            ${job.contractLabel}
+                        </span>
+
+                        <span class="px-2.5 py-1 rounded-md bg-amber-50 text-amber-900 border border-amber-200 font-medium ml-auto">
+                            ${job.experienceLabel}
+                        </span>
+                    </div>
+                </div>
+                `;
+            }).join('');
+        }
+
+        function setFormatFilter(format) {
+            activeFormatFilter = format;
+            document.querySelectorAll('.format-tab').forEach(tab => {
+                if (tab.getAttribute('data-format') === format) {
+                    tab.className = "format-tab active px-4 py-2 rounded-lg text-xs font-medium transition-all bg-stone-800 text-white border border-stone-800 shadow-sm";
+                } else {
+                    tab.className = "format-tab px-4 py-2 rounded-lg text-xs font-medium transition-all bg-stone-100 text-stone-700 hover:bg-stone-200 border border-stone-300 flex items-center gap-1.5";
+                }
+            });
+            renderJobs();
+        }
+
+        function applyFilters() {
+            renderJobs();
+        }
+
+        function resetFilters() {
+            document.getElementById('searchInput').value = '';
+            document.getElementById('experienceFilter').value = 'all';
+            document.getElementById('timezoneSelect').value = 'all';
+            document.querySelectorAll('.filter-equipment, .filter-contract').forEach(cb => cb.checked = false);
+            setFormatFilter('all');
+        }
+
+        function openModal(jobId) {
+            const job = jobsDatabase.find(j => j.id === jobId);
+            if (!job) return;
+
+            const modalContent = document.getElementById('modalContent');
+            modalContent.innerHTML = `
+                <div class="flex items-start gap-4 mb-4">
+                    <div class="w-14 h-14 rounded-xl ${job.logoBg} flex items-center justify-center font-bold text-xl shadow-md shrink-0">
+                        ${job.logo}
+                    </div>
+                    <div>
+                        <h2 class="text-xl font-bold text-stone-900">${job.title}</h2>
+                        <p class="text-sm text-stone-500">${job.company} • ${job.location}</p>
+                        <p class="text-lg font-bold text-emerald-700 mt-1">${job.salary}</p>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-2 gap-2 text-xs bg-stone-50 p-4 rounded-xl border border-stone-200 mb-5">
+                    <div><span class="text-stone-400 block">Формат роботи:</span> <strong class="text-stone-800">${job.formatLabel}</strong></div>
+                    <div><span class="text-stone-400 block">Часовий пояс:</span> <strong class="text-stone-800">${job.timezoneLabel}</strong></div>
+                    <div><span class="text-stone-400 block">Графік:</span> <strong class="text-stone-800">${job.schedule}</strong></div>
+                    <div><span class="text-stone-400 block">Обладнання:</span> <strong class="text-stone-800">${job.equipmentLabel}</strong></div>
+                    <div><span class="text-stone-400 block">Договір:</span> <strong class="text-stone-800">${job.contractLabel}</strong></div>
+                    <div><span class="text-stone-400 block">Досвід:</span> <strong class="text-stone-800">${job.experienceLabel}</strong></div>
+                </div>
+
+                <div class="space-y-4 text-xs sm:text-sm text-stone-700">
+                    <div>
+                        <h4 class="font-semibold text-stone-900 mb-1">Опис вакансії:</h4>
+                        <p class="leading-relaxed text-stone-600">${job.description}</p>
+                    </div>
+
+                    <div>
+                        <h4 class="font-semibold text-stone-900 mb-2">Вимоги до кандидата:</h4>
+                        <ul class="list-disc list-inside space-y-1 text-stone-600">
+                            ${job.requirements.map(req => `<li>${req}</li>`).join('')}
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="mt-6 pt-4 border-t border-stone-200 flex justify-end gap-3">
+                    <button onclick="closeModal()" class="px-4 py-2 bg-stone-100 hover:bg-stone-200 text-stone-700 rounded-lg text-xs font-medium">Закрити</button>
+                    <button onclick="alert('Дякуємо! Ваше резюме надіслано роботодавцю.')" class="px-5 py-2 bg-stone-800 hover:bg-stone-700 text-white rounded-lg text-xs font-medium shadow-md">Відгукнутися на вакансію</button>
+                </div>
+            `;
+
+            document.getElementById('jobModal').classList.remove('hidden');
+        }
+
+        function closeModal() {
+            document.getElementById('jobModal').classList.add('hidden');
+        }
+
+        window.onload = function() {
+            renderJobs();
+
+            document.getElementById('searchInput').addEventListener('keyup', renderJobs);
+            document.getElementById('experienceFilter').addEventListener('change', renderJobs);
+            document.getElementById('timezoneSelect').addEventListener('change', renderJobs);
+            
+            document.querySelectorAll('.filter-equipment, .filter-contract').forEach(cb => {
+                cb.addEventListener('change', renderJobs);
+            });
+        };
+    </script>
+</body>
+</html>
